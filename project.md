@@ -14,7 +14,9 @@
 
 # 4. 기술 스택
 ### 4.1 html, js, css
-### 4.2 호스팅 서버 : 차후 결정
+### 4.2 호스팅 서버 : GitHub Pages
+- URL : https://findwhatiwant.github.io/SSU_Student_Innovation_Web/
+- main 브랜치 push 시 자동 배포
 
 # 5. 그 외
 ### 5.1 개발 과정에서 생기는 판단의 모호함은 나에게 질문할 것
@@ -29,6 +31,11 @@
 - 퀴즈 로직 구현 — questions.md 파싱, 점수 합산, 유형 반환
 - 화면 전환 애니메이션 (슬라이드, 페이드)
 - 파일 분리 리팩토링 (클린 아키텍처)
+- 인스타그램 스토리 공유 기능 구현 (Stage 6)
+  - html2canvas로 결과 카드(9:16) 이미지 캡처
+  - 모바일: Web Share API로 네이티브 공유 시트 호출 → 인스타그램 선택 가능
+  - PC / 미지원 환경: 이미지 자동 다운로드 + 안내 메시지로 폴백
+  - 공유 전용 카드 UI (`#share-card`) 및 로딩 오버레이 추가
 
 ### 6.2 파일 구조
 ```
@@ -41,10 +48,17 @@
     ├── store.js      — 퀴즈 상태 관리
     ├── router.js     — 화면 전환
     ├── renderer.js   — DOM 렌더링
+    ├── share.js      — 인스타그램 공유 로직
     └── main.js       — 진입점, 이벤트 바인딩
 ```
 
 ### 6.3 미완료 작업
-- Stage 1 : 실제 질문·유형 콘텐츠 확정 후 questions.md 교체
-- Stage 6 : 인스타그램 스토리 공유 기능 구현
-- Stage 7 : 결과 화면 캐릭터 이미지 교체, 호스팅 배포
+- Stage 1 : 실제 질문·유형 콘텐츠 확정 후 `questions.md` 교체
+- Stage 7 : 결과 화면 및 공유 카드 캐릭터 이미지 교체, 호스팅 배포
+
+### 6.4 직접 해줘야 하는 작업
+- **캐릭터 이미지 교체** : 이미지 확정 후 아래 두 곳의 placeholder SVG를 `<img>` 태그로 교체
+  - `index.html` → `#screen-result` 안의 `.result-illust`
+  - `index.html` → `#share-card` 안의 `.share-illust`
+- **공유 기능 모바일 테스트** : Web Share API는 PC 브라우저에서 동작하지 않으므로, 실제 모바일 기기에서 인스타그램 공유 시트가 뜨는지 직접 확인 필요
+- ~~**호스팅 서버 결정**~~ : GitHub Pages로 확정 및 배포 완료

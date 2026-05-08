@@ -56,6 +56,30 @@
         </div>
     </div>
 
+    <!-- 공유 로딩 오버레이 -->
+    <div id="share-overlay" aria-hidden="true">
+        <div class="spinner"></div>
+        <p>이미지 생성 중...</p>
+    </div>
+
+    <!-- 공유 카드 (html2canvas 캡처용, 평소엔 화면 밖) -->
+    <div id="share-card" aria-hidden="true">
+        <div class="share-bg">
+            <div class="share-illust">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            </div>
+            <div class="share-content">
+                <p class="share-eyebrow">나의 유형은</p>
+                <h2 class="share-name" id="share-type-name"></h2>
+                <p class="share-desc" id="share-type-desc"></p>
+            </div>
+            <div class="share-footer">
+                <p class="share-brand">숭실대학교 학생혁신단</p>
+                <p class="share-tag">#혁신단유형테스트</p>
+            </div>
+        </div>
+    </div>
+
     <!-- RESULT -->
     <div class="screen" id="screen-result">
         <div class="result-top">
@@ -81,6 +105,7 @@
     </div>
 
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>

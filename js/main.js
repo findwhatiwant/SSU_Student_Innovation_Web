@@ -1,7 +1,8 @@
 import { parseMarkdown } from './parser.js';
-import store    from './store.js';
-import router   from './router.js';
-import renderer from './renderer.js';
+import store          from './store.js';
+import router         from './router.js';
+import renderer       from './renderer.js';
+import { shareResult } from './share.js';
 
 async function init() {
     try {
@@ -27,8 +28,6 @@ function startQuiz() {
 
 document.getElementById('btn-start').addEventListener('click', startQuiz);
 document.getElementById('btn-restart').addEventListener('click', startQuiz);
-document.getElementById('btn-instagram').addEventListener('click', () =>
-    alert('인스타그램 공유 기능은 준비 중입니다.')
-);
+document.getElementById('btn-instagram').addEventListener('click', shareResult);
 
 init();
