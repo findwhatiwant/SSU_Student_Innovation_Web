@@ -1,0 +1,402 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+}
+
+:root {
+    --primary:       #7B6FF0;
+    --primary-light: #F0EEFF;
+    --bg:            #F5F4FC;
+    --white:         #FFFFFF;
+    --text:          #1A1833;
+    --text-sub:      #9896B4;
+    --border:        #E8E6F5;
+    --shadow:        0 4px 24px rgba(123, 111, 240, 0.10);
+    --r:             20px;
+}
+
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: var(--bg);
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.app {
+    width: 100%;
+    max-width: 480px;
+    height: 100vh;
+    height: 100dvh;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+}
+
+/* ─── Loading ─── */
+
+#loading {
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    transition: opacity 0.3s ease;
+}
+#loading.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── Screens ─── */
+
+.screen {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(40px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.screen.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+}
+.screen.exit {
+    opacity: 0;
+    transform: translateX(-40px);
+    pointer-events: none;
+}
+
+/* ─── Start Screen ─── */
+
+#screen-start {
+    padding: 48px 28px 40px;
+    justify-content: space-between;
+    gap: 32px;
+}
+.start-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+}
+.start-illust {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.start-illust svg {
+    width: 60px;
+    height: 60px;
+    fill: var(--primary);
+    opacity: 0.45;
+}
+.start-badge {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--primary-light);
+    padding: 6px 16px;
+    border-radius: 100px;
+}
+.start-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text);
+    text-align: center;
+    line-height: 1.35;
+    letter-spacing: -0.6px;
+}
+.start-title em {
+    font-style: normal;
+    color: var(--primary);
+}
+.start-desc {
+    font-size: 15px;
+    color: var(--text-sub);
+    text-align: center;
+    line-height: 1.65;
+    letter-spacing: -0.3px;
+}
+.start-stats {
+    display: flex;
+    background: var(--white);
+    border-radius: var(--r);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    width: 100%;
+}
+.stat-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 0;
+    gap: 4px;
+    position: relative;
+}
+.stat-item + .stat-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: var(--border);
+}
+.stat-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.5px;
+}
+.stat-label {
+    font-size: 12px;
+    color: var(--text-sub);
+    font-weight: 500;
+}
+
+/* ─── Quiz Screen ─── */
+
+#screen-quiz {
+    padding: 24px 28px 32px;
+}
+.progress-wrap {
+    height: 6px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, var(--primary), #A99CF8);
+    border-radius: 100px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.quiz-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.quiz-num-tag {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--primary-light);
+    padding: 4px 12px;
+    border-radius: 100px;
+}
+.quiz-total {
+    font-size: 13px;
+    color: var(--text-sub);
+    font-weight: 500;
+}
+.quiz-q-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.quiz-q-wrap.slide-out { animation: slideOut 0.2s  ease forwards; }
+.quiz-q-wrap.slide-in  { animation: slideIn  0.25s ease forwards; }
+
+@keyframes slideOut {
+    to { opacity: 0; transform: translateX(-24px); }
+}
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0);    }
+}
+.quiz-question-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.45;
+    letter-spacing: -0.5px;
+    margin-bottom: 32px;
+}
+.choices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.choice-btn {
+    width: 100%;
+    padding: 20px 22px;
+    background: var(--white);
+    border: 2px solid transparent;
+    border-radius: var(--r);
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    letter-spacing: -0.3px;
+    line-height: 1.45;
+    transition: border-color 0.15s, background 0.15s, color 0.15s, transform 0.1s;
+}
+.choice-btn:active { transform: scale(0.985); }
+.choice-btn.selected {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* ─── Result Screen ─── */
+
+#screen-result { padding-bottom: 48px; }
+.result-top {
+    background: linear-gradient(150deg, #8B80F2, #6B60E6);
+    padding: 60px 28px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+.result-illust {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+.result-illust svg {
+    width: 52px;
+    height: 52px;
+    fill: white;
+    opacity: 0.6;
+}
+.result-eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+}
+.result-type-name {
+    font-size: 26px;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    letter-spacing: -0.6px;
+    line-height: 1.3;
+}
+.result-body {
+    padding: 28px 28px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.result-card {
+    background: var(--white);
+    border-radius: var(--r);
+    padding: 22px;
+    box-shadow: var(--shadow);
+}
+.result-card-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+.result-desc-text {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.75;
+    letter-spacing: -0.3px;
+}
+.result-actions {
+    padding: 24px 28px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ─── Buttons ─── */
+
+.btn-primary {
+    width: 100%;
+    padding: 18px;
+    background: var(--primary);
+    color: white;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--r);
+    cursor: pointer;
+    letter-spacing: -0.4px;
+    box-shadow: 0 6px 24px rgba(123, 111, 240, 0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-primary:active {
+    transform: scale(0.98);
+    box-shadow: 0 3px 12px rgba(123, 111, 240, 0.2);
+}
+.btn-instagram {
+    width: 100%;
+    padding: 17px;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: white;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--r);
+    cursor: pointer;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.15s;
+}
+.btn-instagram:active { transform: scale(0.98); }
+.btn-ghost {
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    color: var(--text-sub);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    letter-spacing: -0.3px;
+    transition: color 0.15s;
+}
+.btn-ghost:hover { color: var(--text); }
