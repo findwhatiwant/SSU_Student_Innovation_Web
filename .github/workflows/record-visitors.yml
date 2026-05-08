@@ -1,0 +1,57 @@
+name: Record Daily Visitors
+
+on:
+  schedule:
+    - cron: '0 15 * * *'  # 매일 자정 KST (UTC 15:00)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch count and update visitors.json
+        run: |
+          RESPONSE=$(curl -sf "https://api.countapi.xyz/get/findwhatiwant/ssu-innovation-visitors" || echo '{"value":0}')
+          CURRENT=$(echo "$RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin).get('value', 0))")
+          export CURRENT_TOTAL="$CURRENT"
+
+          python3 << 'PYEOF'
+          import json, os
+          from datetime import datetime, timezone, timedelta
+
+          KST = timezone(timedelta(hours=9))
+          yesterday = (datetime.now(KST) - timedelta(days=1)).strftime('%Y-%m-%d')
+          current_total = int(os.environ.get('CURRENT_TOTAL', '0'))
+
+          with open('visitors.json') as f:
+              data = json.load(f)
+
+          delta = max(0, current_total - data.get('last_total', 0))
+          records = data.get('records', [])
+
+          for rec in records:
+              if rec['date'] == yesterday:
+                  rec['visitors'] = delta
+                  break
+          else:
+              records.append({'date': yesterday, 'visitors': delta})
+
+          data['records'] = records
+          data['last_total'] = current_total
+
+          with open('visitors.json', 'w') as f:
+              json.dump(data, f, ensure_ascii=False, indent=2)
+          PYEOF
+
+      - name: Commit visitors.json
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add visitors.json
+          git diff --staged --quiet || git commit -m "chore: record visitors $(date -u +'%Y-%m-%d')"
+          git push
