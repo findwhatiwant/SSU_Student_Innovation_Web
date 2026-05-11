@@ -6,13 +6,11 @@ export async function shareResult() {
     const card    = document.getElementById('share-card');
 
     document.getElementById('share-type-name').textContent = result.name;
-    document.getElementById('share-type-desc').textContent = result.desc;
+    document.getElementById('share-type-desc').textContent = result.summary;
 
-    // 오버레이로 화면을 가린 뒤 카드를 화면 위에 올려 캡처
     overlay.classList.add('visible');
     card.classList.add('visible');
 
-    // 두 프레임 대기 (렌더 보장)
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
     try {
@@ -31,14 +29,17 @@ export async function shareResult() {
         const file = new File([blob], 'ssu-혁신단-유형-결과.png', { type: 'image/png' });
 
         if (navigator.canShare?.({ files: [file] })) {
-            await navigator.share({ files: [file] });
+            await navigator.share({ 
+                files: [file],
+                // 공유 텍스트에 인스타 아이디 추가
+                text: `나의 혁신단 유형은 [${result.name}]! @ssu_innovators 태그하고 이벤트 참여해요! 🎁` 
+            });
         } else {
             _download(canvas);
         }
     } catch (e) {
         _hide(overlay, card);
         if (e.name !== 'AbortError') {
-            // Web Share API 미지원 환경 — 다운로드로 폴백
             console.warn('공유 실패, 다운로드로 전환:', e);
         }
     }
@@ -54,5 +55,6 @@ function _download(canvas) {
     a.href = canvas.toDataURL('image/png');
     a.download = 'ssu-혁신단-유형-결과.png';
     a.click();
-    setTimeout(() => alert('이미지가 다운로드되었습니다.\n인스타그램 앱에서 스토리로 업로드해주세요!'), 300);
+    // 알림 문구에도 인스타 아이디 반영
+    setTimeout(() => alert('이미지가 다운로드되었습니다.\n@ssu_innovators 계정을 태그해서 스토리에 올려주세요! 🎁'), 300);
 }

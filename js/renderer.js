@@ -27,26 +27,49 @@ const renderer = {
             const btn = document.createElement('button');
             btn.className = 'choice-btn';
             btn.textContent = choice.text;
-            btn.addEventListener('click', () => this._onChoiceClick(choice.type, btn));
+            
+            // choice.type 대신 choice.weights를 넘겨주도록 변경
+            btn.addEventListener('click', () => this._onChoiceClick(choice.weights, btn));
+            
             list.appendChild(btn);
         });
     },
 
     renderResult() {
-        const result = store.types[store.topType];
-        document.getElementById('result-name').textContent = result.name;
-        document.getElementById('result-desc').textContent = result.desc;
-        document.getElementById('progress-bar').style.width = '100%';
-        router.goTo('screen-result');
-    },
+    const result = store.types[store.topType];
+    document.getElementById('result-name').textContent = result.name;
+    document.getElementById('result-desc').textContent = result.desc;
+    
+    // 포스터 이미지 처리
+    const posterImg = document.getElementById('result-poster-img');
+    const posterWrap = document.getElementById('poster-wrap');
 
-    _onChoiceClick(type, btn) {
+    if (posterImg && posterWrap) {
+        posterImg.onerror = () => {
+            // 포스터 이미지가 없는 경우 해당 영역을 숨김
+            posterWrap.style.display = 'none'; 
+        };
+        posterImg.onload = () => {
+            // 이미지가 성공적으로 로드된 경우에만 영역을 보여줌
+            posterWrap.style.display = 'block';
+        };
+        posterImg.src = `images/${store.topType}.jpg`; 
+    }
+
+    document.getElementById('progress-bar').style.width = '100%';
+    router.goTo('screen-result');
+},
+
+    // 파라미터 이름을 type에서 weights로 변경
+    _onChoiceClick(weights, btn) {
         document.querySelectorAll('.choice-btn').forEach(b => {
             b.disabled = true;
             b.style.cursor = 'default';
         });
         btn.classList.add('selected');
-        store.answer(type);
+        
+        // store.answer에 다중 가중치 객체(weights)를 통째로 넘김
+        store.answer(weights);
 
         setTimeout(() => {
             document.getElementById('quiz-q-wrap').classList.add('slide-out');
