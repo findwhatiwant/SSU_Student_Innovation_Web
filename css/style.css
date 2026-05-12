@@ -512,3 +512,47 @@ body {
     color: rgba(255, 255, 255, 0.55);
     letter-spacing: -0.1px;
 }
+
+.event-notice-box {
+    margin: 8px 0; /* 버튼 사이 간격 조절 */
+    padding: 14px 18px;
+    background-color: var(--primary-light); /* 기존에 정의된 연보라색 변수 사용 */
+    border-radius: 16px;
+    text-align: left;
+}
+
+.notice-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--primary);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.notice-list {
+    margin: 0;
+    padding-left: 14px;
+    list-style-type: none; /* 점 대신 깔끔하게 */
+}
+
+.notice-list li {
+    position: relative;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-sub);
+    margin-bottom: 2px;
+}
+
+.notice-list li::before {
+    content: "•";
+    position: absolute;
+    left: -12px;
+    color: var(--primary);
+}
+
+.notice-list li strong {
+    color: var(--text);
+    font-weight: 600;
+}
