@@ -33,18 +33,17 @@ const store = {
     get topType() {
         let maxScore = -1;
         let topTypes = [];
-        
+
         for (const [type, score] of Object.entries(this.scores)) {
             if (score > maxScore) {
                 maxScore = score;
                 topTypes = [type];
             } else if (score === maxScore) {
-                // 최고 점수와 동점인 경우 배열에 추가합니다.
                 topTypes.push(type);
             }
         }
-        
-        // 동점인 항목들 중에서 랜덤하게 하나의 인덱스를 뽑아 반환합니다.
+
+        if (topTypes.length === 0) topTypes = Object.keys(this.types);
         const randomIndex = Math.floor(Math.random() * topTypes.length);
         return topTypes[randomIndex];
     },

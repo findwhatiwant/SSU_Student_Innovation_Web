@@ -36,7 +36,15 @@ const renderer = {
     },
 
     renderResult() {
-    const result = store.types[store.topType];
+    const topType = store.topType;
+    const result = store.types[topType];
+
+    if (!result) {
+        console.error('결과 유형 없음. topType:', topType, '| types:', Object.keys(store.types));
+        router.goTo('screen-result');
+        return;
+    }
+
     document.getElementById('result-name').textContent = result.name;
     document.getElementById('result-desc').textContent = result.desc;
     
