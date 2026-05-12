@@ -11,7 +11,7 @@ export function parseMarkdown(text) {
         if (trimmed === '# 질문')  { section = 'questions'; continue; }
 
         if (section === 'types') {
-            const tm = trimmed.match(/^\[([A-Z])\]$/);
+            const tm = trimmed.match(/^\[(.+)\]$/);
             // 초기 객체 생성 시 summary 추가
             if (tm) { curType = tm[1]; types[curType] = { name: '', desc: '', summary: '' }; continue; }
             
