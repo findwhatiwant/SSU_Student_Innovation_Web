@@ -53,7 +53,7 @@ const renderer = {
             // 이미지가 성공적으로 로드된 경우에만 영역을 보여줌
             posterWrap.style.display = 'block';
         };
-        posterImg.src = `images/${store.topType}.jpg`; 
+        posterImg.src = `images/${store.topType}.png`; 
     }
 
     document.getElementById('progress-bar').style.width = '100%';
