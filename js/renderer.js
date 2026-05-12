@@ -36,32 +36,23 @@ const renderer = {
     },
 
     renderResult() {
-    const topType = store.topType;
+    const topType = store.topType; // 여기서 딱 한 번만 결정! (예: "I"로 고정)
     const result = store.types[topType];
 
-    if (!result) {
-        console.error('결과 유형 없음. topType:', topType, '| types:', Object.keys(store.types));
-        router.goTo('screen-result');
-        return;
-    }
+    if (!result) return;
 
     document.getElementById('result-name').textContent = result.name;
     document.getElementById('result-desc').textContent = result.desc;
     
-    // 포스터 이미지 처리
     const posterImg = document.getElementById('result-poster-img');
     const posterWrap = document.getElementById('poster-wrap');
 
     if (posterImg && posterWrap) {
-        posterImg.onerror = () => {
-            // 포스터 이미지가 없는 경우 해당 영역을 숨김
-            posterWrap.style.display = 'none'; 
-        };
-        posterImg.onload = () => {
-            // 이미지가 성공적으로 로드된 경우에만 영역을 보여줌
-            posterWrap.style.display = 'block';
-        };
-        posterImg.src = `images/${store.topType}.png`; 
+        posterImg.onload = () => { posterWrap.style.display = 'block'; };
+        posterImg.onerror = () => { posterWrap.style.display = 'none'; };
+        
+        // store.topType 대신 위에서 이미 결정된 topType 변수를 사용
+        posterImg.src = `images/${topType}.png`; 
     }
 
     document.getElementById('progress-bar').style.width = '100%';
