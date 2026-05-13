@@ -14,26 +14,25 @@
 
     <div id="loading"><div class="spinner"></div></div>
 
-    <!-- START -->
     <div class="screen" id="screen-start">
         <div class="start-content">
             <div class="start-illust">
                 <img src="images/logo.png" alt="학생혁신단 로고" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
             <span class="start-badge">숭실대 학생혁신단</span>
-            <h1 class="start-title">나는 어떤<br><em>혁신단</em> 유형일까?</h1>
-            <p class="start-desc">임시 설명 텍스트입니다.<br>나중에 실제 내용으로 바꿀 예정입니다.</p>
+            <h1 class="start-title">당신에게 추천하는<br><em>대학혁신지원사업</em>은?</h1>
+            <p class="start-desc">테스트를 통해 여러분의 학교 생활을 더 풍부하게 만들어줄<br>대학혁신지원사업을 추천해 드립니다!</p>
             <div class="start-stats">
                 <div class="stat-item">
-                    <span class="stat-num" id="stat-questions">8</span>
+                    <span class="stat-num" id="stat-questions">12</span>
                     <span class="stat-label">문항</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-num">3분</span>
+                    <span class="stat-num">2분</span>
                     <span class="stat-label">소요시간</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-num" id="stat-types">4</span>
+                    <span class="stat-num" id="stat-types">14</span>
                     <span class="stat-label">유형</span>
                 </div>
             </div>
@@ -41,14 +40,13 @@
         <button class="btn-primary" id="btn-start">테스트 시작하기</button>
     </div>
 
-    <!-- QUIZ -->
     <div class="screen" id="screen-quiz">
         <div class="progress-wrap">
             <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
         </div>
         <div class="quiz-meta">
             <span class="quiz-num-tag" id="quiz-num">Q1</span>
-            <span class="quiz-total" id="quiz-total">1 / 8</span>
+            <span class="quiz-total" id="quiz-total">1 / 12</span>
         </div>
         <div class="quiz-q-wrap" id="quiz-q-wrap">
             <p class="quiz-question-text" id="quiz-question"></p>
@@ -56,20 +54,18 @@
         </div>
     </div>
 
-    <!-- 공유 로딩 오버레이 -->
     <div id="share-overlay" aria-hidden="true">
         <div class="spinner"></div>
         <p>이미지 생성 중...</p>
     </div>
 
-    <!-- 공유 카드 (html2canvas 캡처용, 평소엔 화면 밖) -->
     <div id="share-card" aria-hidden="true">
         <div class="share-bg">
             <div class="share-illust">
                 <img src="images/logo.png" alt="학생혁신단 로고" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
             <div class="share-content">
-                <p class="share-eyebrow">나의 유형은</p>
+                <p class="share-eyebrow">나에게 추천하는 프로그램은</p>
                 <h2 class="share-name" id="share-type-name"></h2>
                 <p class="share-desc" id="share-type-desc"></p>
             </div>
@@ -80,13 +76,12 @@
         </div>
     </div>
 
-    <!-- RESULT -->
     <div class="screen" id="screen-result">
         <div class="result-top">
             <div class="result-illust">
                 <img src="images/logo.png" alt="학생혁신단 로고" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
-            <p class="result-eyebrow">당신의 유형은</p>
+            <p class="result-eyebrow">당신에게 추천드리는 비교과 프로그램/대학혁신지원사업은</p>
             <h2 class="result-type-name" id="result-name"></h2>
         </div>
 
@@ -95,14 +90,16 @@
                 <div class="result-poster-wrap" id="poster-wrap" style="display: none;">
                     <img src="" id="result-poster-img" alt="사업 포스터">
                 </div>
-                <p class="result-card-label">유형 설명</p>
+                <p class="result-card-label">프로그램 상세 설명</p>
                 <p class="result-desc-text" id="result-desc"></p>
-                </div>
+            </div>
         </div>
 
         <div class="result-actions">
             <button class="btn-instagram" id="btn-instagram">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">...</svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
                 <span>인스타그램 스토리 공유</span>
             </button>
 
