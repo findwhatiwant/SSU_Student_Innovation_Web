@@ -21,6 +21,9 @@ async function init() {
 }
 
 function startQuiz() {
+    if (typeof window.gtag === 'function') {
+        window.gtag('event', 'quiz_start');
+    }
     store.reset();
     router.goTo('screen-quiz');
     setTimeout(() => renderer.renderQuestion(), 220);

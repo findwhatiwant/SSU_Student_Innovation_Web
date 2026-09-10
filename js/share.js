@@ -16,6 +16,15 @@ export async function shareResult() {
 
     document.getElementById('share-type-desc').textContent = result.summary || result.desc;
 
+    // GA4 이벤트: 공유 버튼 클릭 수집
+    if (typeof window.gtag === 'function') {
+        window.gtag('event', 'share_click', {
+            event_category: 'engagement',
+            event_label: result ? result.name : 'unknown',
+            program_type: store.topType
+        });
+    }
+
     overlay.classList.add('visible');
     card.classList.add('visible');
 

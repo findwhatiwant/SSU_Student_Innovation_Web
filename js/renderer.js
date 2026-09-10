@@ -70,6 +70,13 @@ const renderer = {
 
     document.getElementById('progress-bar').style.width = '100%';
     router.goTo('screen-result');
+
+    if (typeof window.gtag === 'function') {
+        window.gtag('event', 'quiz_complete', {
+            event_label: result.name,
+            program_type: topType
+        });
+    }
 },
 
     // 파라미터 이름을 type에서 weights로 변경
