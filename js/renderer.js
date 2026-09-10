@@ -21,6 +21,15 @@ const renderer = {
 
         document.getElementById('quiz-question').textContent = text;
 
+        // GA4 이벤트: 문항 노출(단계별 진행 추적용)
+        if (typeof window.gtag === 'function') {
+            window.gtag('event', 'quiz_step', {
+                step_number: store.currentQ + 1,
+                step_name: `Q${store.currentQ + 1}`,
+                total_steps: store.total
+            });
+        }
+
         const list = document.getElementById('choices-list');
         list.innerHTML = '';
         choices.forEach(choice => {
@@ -86,6 +95,14 @@ const renderer = {
             b.style.cursor = 'default';
         });
         btn.classList.add('selected');
+
+        // GA4 이벤트: 문항 응답
+        if (typeof window.gtag === 'function') {
+            window.gtag('event', 'quiz_answer', {
+                question_number: store.currentQ + 1,
+                question_tag: `Q${store.currentQ + 1}`
+            });
+        }
         
         // store.answer에 다중 가중치 객체(weights)를 통째로 넘김
         store.answer(weights);

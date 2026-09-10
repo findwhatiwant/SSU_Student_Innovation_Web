@@ -20,7 +20,10 @@ async function init() {
     router.show('screen-start');
 }
 
+let dropoffTracked = false;
+
 function startQuiz() {
+    dropoffTracked = false;
     if (typeof window.gtag === 'function') {
         window.gtag('event', 'quiz_start');
     }
@@ -28,6 +31,24 @@ function startQuiz() {
     router.goTo('screen-quiz');
     setTimeout(() => renderer.renderQuestion(), 220);
 }
+
+function trackDropoff() {
+    if (dropoffTracked) return;
+    const quizScreen = document.getElementById('screen-quiz');
+    if (quizScreen && quizScreen.classList.contains('active') && !store.isFinished) {
+        dropoffTracked = true;
+        if (typeof window.gtag === 'function') {
+            window.gtag('event', 'quiz_dropoff', {
+                dropoff_question: store.currentQ + 1,
+                dropoff_question_tag: `Q${store.currentQ + 1}`,
+                total_questions: store.total,
+                transport_type: 'beacon'
+            });
+        }
+    }
+}
+
+window.addEventListener('pagehide', trackDropoff);
 
 document.getElementById('btn-start').addEventListener('click', startQuiz);
 document.getElementById('btn-restart').addEventListener('click', startQuiz);
