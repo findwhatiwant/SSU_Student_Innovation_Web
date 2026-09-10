@@ -41,7 +41,14 @@ const renderer = {
 
     if (!result) return;
 
-    document.getElementById('result-name').textContent = result.name;
+    const nameEl = document.getElementById('result-name');
+    nameEl.textContent = result.name;
+    nameEl.classList.remove('is-long', 'is-extra-long');
+    if (result.name.length >= 14) {
+        nameEl.classList.add('is-extra-long');
+    } else if (result.name.length >= 10) {
+        nameEl.classList.add('is-long');
+    }
     document.getElementById('result-desc').textContent = result.desc;
     
     const posterImg = document.getElementById('result-poster-img');
@@ -49,7 +56,13 @@ const renderer = {
 
     if (posterImg && posterWrap) {
         posterImg.onload = () => { posterWrap.style.display = 'block'; };
-        posterImg.onerror = () => { posterWrap.style.display = 'none'; };
+        posterImg.onerror = function () {
+            if (!this.src.endsWith('images/N.png')) {
+                this.src = 'images/N.png';
+            } else {
+                posterWrap.style.display = 'none';
+            }
+        };
         
         // store.topType 대신 위에서 이미 결정된 topType 변수를 사용
         posterImg.src = `images/${topType}.png`; 

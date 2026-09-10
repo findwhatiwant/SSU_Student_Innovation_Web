@@ -5,8 +5,16 @@ export async function shareResult() {
     const overlay = document.getElementById('share-overlay');
     const card    = document.getElementById('share-card');
 
-    document.getElementById('share-type-name').textContent = result.name;
-    document.getElementById('share-type-desc').textContent = result.summary;
+    const shareNameEl = document.getElementById('share-type-name');
+    shareNameEl.textContent = result.name;
+    shareNameEl.classList.remove('is-long', 'is-extra-long');
+    if (result.name.length >= 14) {
+        shareNameEl.classList.add('is-extra-long');
+    } else if (result.name.length >= 10) {
+        shareNameEl.classList.add('is-long');
+    }
+
+    document.getElementById('share-type-desc').textContent = result.summary || result.desc;
 
     overlay.classList.add('visible');
     card.classList.add('visible');

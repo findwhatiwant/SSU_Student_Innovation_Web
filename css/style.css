@@ -242,6 +242,9 @@ body {
     line-height: 1.45;
     letter-spacing: -0.5px;
     margin-bottom: 32px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    text-wrap: balance;
 }
 .choices-list {
     display: flex;
@@ -263,6 +266,8 @@ body {
     box-shadow: var(--shadow);
     letter-spacing: -0.3px;
     line-height: 1.45;
+    word-break: keep-all;
+    overflow-wrap: break-word;
     transition: border-color 0.15s, background 0.15s, color 0.15s, transform 0.1s;
 }
 .choice-btn:active { transform: scale(0.985); }
@@ -311,6 +316,18 @@ body {
     color: white;
     text-align: center;
     letter-spacing: -0.6px;
+    line-height: 1.35;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+    max-width: 90%;
+    margin: 0 auto;
+}
+.result-type-name.is-long {
+    font-size: 22px;
+}
+.result-type-name.is-extra-long {
+    font-size: 20px;
     line-height: 1.3;
 }
 .result-body {
@@ -353,6 +370,8 @@ body {
     color: var(--text);
     line-height: 1.75;
     letter-spacing: -0.3px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 .result-actions {
     padding: 24px 28px 0;
@@ -504,17 +523,30 @@ body {
     letter-spacing: -0.2px;
 }
 .share-name {
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 800;
     color: white;
+    line-height: 1.35;
+    letter-spacing: -0.5px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+    max-width: 100%;
+}
+.share-name.is-long {
+    font-size: 22px;
+}
+.share-name.is-extra-long {
+    font-size: 19px;
     line-height: 1.3;
-    letter-spacing: -0.6px;
 }
 .share-desc {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.85);
     line-height: 1.65;
     letter-spacing: -0.2px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 .share-footer {
     display: flex;
