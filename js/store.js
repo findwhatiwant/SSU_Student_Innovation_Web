@@ -3,6 +3,7 @@ const store = {
     questions: [],
     currentQ: 0,
     scores: {},
+    _cachedTopType: null, // 한 번 뽑은 결과를 기억할 변수
 
     load({ types, questions }) {
         this.types = types;
@@ -12,6 +13,7 @@ const store = {
     reset() {
         this.currentQ = 0;
         this.scores = {};
+        this._cachedTopType = null; // 다시하기 누르면 리셋
         Object.keys(this.types).forEach(k => (this.scores[k] = 0));
     },
 
@@ -29,8 +31,10 @@ const store = {
     get total()      { return this.questions.length; },
     get isFinished() { return this.currentQ >= this.questions.length; },
     
-    // 수정된 부분: 동점 발생 시 앞의 인덱스로 쏠리는 현상을 막기 위해 랜덤으로 선택합니다.
     get topType() {
+        // 이미 뽑아둔 결과가 있으면 다시 랜덤 안 돌리고 그대로 반환
+        if (this._cachedTopType) return this._cachedTopType; 
+
         let maxScore = -1;
         let topTypes = [];
 
@@ -44,8 +48,13 @@ const store = {
         }
 
         if (topTypes.length === 0) topTypes = Object.keys(this.types);
+        
+        // 기존의 랜덤 로직 유지
         const randomIndex = Math.floor(Math.random() * topTypes.length);
-        return topTypes[randomIndex];
+        
+        // 처음 뽑은 랜덤 결과를 변수에 저장
+        this._cachedTopType = topTypes[randomIndex]; 
+        return this._cachedTopType;
     },
 };
 

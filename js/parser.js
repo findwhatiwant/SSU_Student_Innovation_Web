@@ -22,9 +22,13 @@ export function parseMarkdown(text) {
                 const dm = trimmed.match(/^설명:\s*(.+)/);
                 if (dm) { types[curType].desc = dm[1].trim(); continue; }
                 
-                // "요약:" 키워드를 찾아서 .summary에 저장!
+                // 요약 키워드를 찾아서 .summary에 저장!
                 const sm = trimmed.match(/^요약:\s*(.+)/);
                 if (sm) { types[curType].summary = sm[1].trim(); continue; }
+                
+                // 링크 키워드를 찾아서 .link에 저장!
+                const lm = trimmed.match(/^링크:\s*(.+)/);
+                if (lm) { types[curType].link = lm[1].trim(); continue; }
             }
         }
 
