@@ -112,8 +112,8 @@ const renderer = {
             setTimeout(() => {
                 if (store.isFinished) this.renderResult();
                 else this.renderQuestion();
-            }, 200);
-        }, 380);
+            }, 100);
+        }, 200);
     },
 };
 
