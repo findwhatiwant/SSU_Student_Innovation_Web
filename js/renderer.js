@@ -65,15 +65,21 @@ const renderer = {
 
     if (posterImg && posterWrap) {
         posterImg.onload = () => { posterWrap.style.display = 'block'; };
+        
         posterImg.onerror = function () {
-            if (!this.src.endsWith('images/N.png')) {
+            // 현재 찾고 있는 파일이 정확히 무엇인지 확인 (무한루프 방어)
+            if (this.src.endsWith(`${topType}.png`)) {
+                this.src = `images/${topType}.jpeg`;
+            } else if (this.src.endsWith(`${topType}.jpeg`)) {
+                this.src = `images/${topType}.jpg`;
+            } else if (!this.src.endsWith('N.png')) {
                 this.src = 'images/N.png';
             } else {
                 posterWrap.style.display = 'none';
             }
         };
         
-        // store.topType 대신 위에서 이미 결정된 topType 변수를 사용
+        // 맨 처음에는 무조건 png 파일부터 찾기 시작
         posterImg.src = `images/${topType}.png`; 
     }
 
@@ -85,6 +91,15 @@ const renderer = {
             event_label: result.name,
             program_type: topType
         });
+    }
+
+    // 링크 유무에 따라 버튼 렌더링
+    const linkBtn = document.getElementById('result-link-btn');
+    if (result.link) {
+        linkBtn.href = result.link;
+        linkBtn.style.display = 'block';
+    } else {
+        linkBtn.style.display = 'none';
     }
 },
 
